@@ -2,6 +2,10 @@ const express = require('express');
 const router = express.Router();
 
 module.exports = router
+    .get('/', (req, res) => {
+        console.log(req.session);
+        res.send('Sessione attiva');
+    })
     .get('/session', (req, res) => {
         console.log(req.session.id);
         req.session.theme = 'dark';

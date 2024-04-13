@@ -29,6 +29,10 @@
     const pageRoutes = require('./Routes/pageRoutes');
 
     app.use(pageRoutes)
+    app.use((err, req, res, next) => {
+        console.error(err);
+        res.status(500).send('Something broke!');
+    });
 
 
     //% Connessione a MongoDB
