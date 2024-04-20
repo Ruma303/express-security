@@ -1,26 +1,19 @@
 const express = require('express');
 const router = express.Router();
+const jwt = require('jsonwebtoken');
 
 module.exports = router
-    .get('/', (req, res) => {
-        console.log(req.session);
-        res.send('Sessione attiva');
-    })
-    .get('/session', (req, res) => {
-        console.log(req.session.id);
-        req.session.theme = 'dark';
-        res.send('Sessione attiva');
-    })
-    .get('/theme', (req, res) => {
-        res.send(`Tema impostato a ${req.session.theme}`);
+    .post('/login', (req, res) => {
+        const payload = { id: 1, username: 'admin', isLogged: true };
+        const options = { expiresIn: '10s' };
+        const token = jwt.sign(payload, process.env.JWT_SECRET, options);
+        res.send(token);
     })
     .get('/login', (req, res) => {
-        req.session.isLogged = true;
-        res.send();
-    })
-    .get('/verify', (req, res) => {
-        if (!req.session.isLogged) return res.send('Utente non autenticato');
-        res.send(`L'utente è autenticato`);
+        const payload = { id: 1, username: 'admin', isLogged: true };
+        const options = { expiresIn: '10s' };
+        const token = jwt.sign(payload, process.env.JWT_SECRET, options);
+        res.cookie('JWT', token).send();
     })
     .get('/logout', (req, res) => {
         req.session.isLogged = false;
