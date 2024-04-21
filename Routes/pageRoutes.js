@@ -30,8 +30,8 @@ module.exports = router
             res.send('Il token è valido');
             console.log(decoded);
         } catch (err) {
-            res.status(401).send('Token non valido');
             console.log(err);
+            return res.status(401).send('Token non valido');
         }
     })
 
