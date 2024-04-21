@@ -11,19 +11,27 @@ module.exports = router
     })
     .get('/login', (req, res) => {
         const payload = { id: 1, username: 'admin', isLogged: true };
-        const options = { expiresIn: '10s' };
+        const options = { expiresIn: '100s' };
+        const expires = 100;
+        const cookieSettings = {
+            maxAge: expires * 1000,
+            httpOnly: true,
+            secure: false
+        };
         const token = jwt.sign(payload, process.env.JWT_SECRET, options);
-        res.cookie('JWT', token).send();
+        res.cookie('JWT', token, cookieSettings).send();
     })
+    //console.log(req.cookies.JWT);
     .get('/check', (req, res) => {
-        console.log(req.cookies.JWT);
-        res.send();
+        const token = req.cookies.JWT;
+        if (!token) return res.status(401).send('Token mancante');
+        try {
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            res.send('Il token è valido');
+            console.log(decoded);
+        } catch (err) {
+            res.status(401).send('Token non valido');
+            console.log(err);
+        }
     })
-    .get('/logout', (req, res) => {
-        req.session.isLogged = false;
-        res.send('Logout effettuato');
-    })
-    .get('/destroy', (req, res) => {
-        req.session.destroy(err => console.log(err));
-        res.send('Sessione distrutta');
-    })
+
