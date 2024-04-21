@@ -15,6 +15,10 @@ module.exports = router
         const token = jwt.sign(payload, process.env.JWT_SECRET, options);
         res.cookie('JWT', token).send();
     })
+    .get('/check', (req, res) => {
+        console.log(req.cookies.JWT);
+        res.send();
+    })
     .get('/logout', (req, res) => {
         req.session.isLogged = false;
         res.send('Logout effettuato');

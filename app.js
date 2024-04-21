@@ -1,8 +1,6 @@
 const express = require('express'), mongoose = require('mongoose'),
 app = express();
-const { v4: uuidv4 } =  require('uuid');
-const session = require('express-session');
-const MongoStore = require('connect-mongo');
+const cookieParser = require('cookie-parser');
 
 
 
@@ -12,17 +10,9 @@ const PORT = process.env.PORT || 3000;
 const DB_PORT = process.env.DB_PORT || 27017;
 const DB_NAME = process.env.DB_NAME || 'mongoose';
 
+//% Middleware
 app.use(express.json())
-
-    //# Middleware di sessione
-    .use(session({
-        secret: process.env.SESSION_KEY || 'mySecretKey',
-        resave: false,
-        saveUninitialized: true,
-        cookie: { secure: false },
-        genid: () => uuidv4(),
-        store: MongoStore.create({ mongoUrl: `mongodb://localhost:${DB_PORT}/${DB_NAME}` })
-    }));
+app.use(cookieParser());
 
 
 //% Importazione Rotte
