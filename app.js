@@ -2,8 +2,6 @@ const express = require('express'), mongoose = require('mongoose'),
 app = express();
 const cookieParser = require('cookie-parser');
 
-
-
 //, Variabili d'ambiente
 require('dotenv').config();
 const PORT = process.env.PORT || 3000;
