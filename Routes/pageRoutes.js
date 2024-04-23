@@ -3,16 +3,18 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
 const path = require('path');
+const checkAuth = require('../Middlewares/user-auth');
 
+const options = { expiresIn: '100s', algorithm: 'RS256' };
 
-    const options = { expiresIn: '100s', algorithm: 'RS256'};
-    module.exports = router
+module.exports = router
     .post('/login', (req, res) => {
         const payload = { id: 1, username: 'admin', isLogged: true };
         const options = { expiresIn: '10s' };
         const token = jwt.sign(payload, process.env.JWT_SECRET, options);
         res.send(token);
     })
+
     // % HS256
     /* .get('/login', (req, res) => {
         const payload = { id: 1, username: 'admin', isLogged: true };
@@ -53,7 +55,7 @@ const path = require('path');
         const token = jwt.sign(payload, prvKey, options);
         res.cookie('JWT', token, cookieSettings).send();
     })
-    .get('/check', (req, res) => {
+    /* .get('/check', (req, res) => {
         const token = req.cookies.JWT;
         if (!token) return res.status(401).send('Token mancante');
         try {
@@ -65,5 +67,20 @@ const path = require('path');
             console.log(err);
             return res.status(401).send('Token non valido');
         }
+    }) */
+
+    //% Middleware
+    .get('/check', checkAuth, (req, res) => {
+        res.send('Il token è valido');
+    })
+
+    //% Logout
+    .get('/logout', (req, res) => {
+        /* res.cookie('JWT', '', {
+            maxAge: 0,
+            httpOnly: 0,
+            secure: false
+        }).send('Logout effettuato'); */
+        res.clearCookie('JWT').send('Logout effettuato');
     })
 
