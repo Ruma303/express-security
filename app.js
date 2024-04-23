@@ -9,8 +9,11 @@ const DB_PORT = process.env.DB_PORT || 27017;
 const DB_NAME = process.env.DB_NAME || 'mongoose';
 
 //% Middleware
+app.set('view engine', 'ejs')
 app.use(express.json())
-app.use(cookieParser());
+app.use(cookieParser())
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public'));
 
 
 //% Importazione Rotte

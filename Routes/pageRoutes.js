@@ -4,7 +4,8 @@ const jwt = require('jsonwebtoken');
 const fs = require('fs');
 const path = require('path');
 const checkAuth = require('../Middlewares/user-auth');
-
+const csrf = require('csurf');
+const csrfProtection = csrf({ cookie: true });
 const options = { expiresIn: '100s', algorithm: 'RS256' };
 
 module.exports = router
@@ -49,7 +50,8 @@ module.exports = router
         const cookieSettings = {
             maxAge: expires * 1000,
             httpOnly: true,
-            secure: false
+            secure: false,
+            sameSite: 'Lax'
         };
         const prvKey = fs.readFileSync(path.resolve('rsa.private'));
         const token = jwt.sign(payload, prvKey, options);
@@ -82,5 +84,16 @@ module.exports = router
             secure: false
         }).send('Logout effettuato'); */
         res.clearCookie('JWT').send('Logout effettuato');
+    })
+
+    //% CSRF
+    .get('/change-email', csrfProtection, (req, res) => {
+        const csrfToken = req.csrfToken();
+        res.render('change-email', { csrfToken });
+        console.log(csrfToken);
+    })
+    .post('/change-email', csrfProtection, (req, res) => {
+        console.log(req.body);
+        res.send('Email cambiata');
     })
 
