@@ -1,5 +1,5 @@
 const express = require('express'), app = express();
-const passport = require('passport');
+// const passport = require('passport');
 const session = require('express-session');
 const mongooseConnect = require('./app/config/dbConnection');
 
@@ -19,22 +19,19 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }));
-app.use(express.static('public'));
 
 
 //% Importazione Rotte
 const pageRoutes = require('./app/routes/pages');
-const authRoutes = require('./app/routes/auth');
 const userRoutes = require('./app/routes/user');
 
 app.use(pageRoutes);
-app.use(authRoutes);
 app.use('/user', userRoutes);
 
-/* app.use((err, req, res, next) => {
+app.use((err, req, res, next) => {
     console.error(err);
-    res.status(500).send('Something broke!');
-}); */
+    res.status(500).send('Qualcosa è andato storto!');
+});
 
 
 //% Avvio Server
@@ -43,6 +40,6 @@ app.use('/user', userRoutes);
         await mongooseConnect();
         app.listen(PORT, () => console.log(`Backend attivo sulla porta ${PORT}`));
     } catch (err) {
-        console.error('Errore di connessione al database:', err);
+        console.error('Errore interno:', err);
     }
 })()
