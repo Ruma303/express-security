@@ -1,36 +1,41 @@
-const express = require('express'), mongoose = require('mongoose'),
-app = express();
-const cookieParser = require('cookie-parser');
+const express = require('express'), app = express();
+const passport = require('passport');
+const session = require('express-session');
+const mongooseConnect = require('./app/config/dbConnection');
 
-//, Variabili d'ambiente
-require('dotenv').config();
+
+//% Configurazione Server
 const PORT = process.env.PORT || 3000;
-const DB_PORT = process.env.DB_PORT || 27017;
-const DB_NAME = process.env.DB_NAME || 'mongoose';
+const SESSION_KEY = process.env.SESSION_KEY || 'mySecretKey';
+
 
 //% Middleware
-app.set('view engine', 'ejs')
-app.use(express.json())
-app.use(cookieParser())
+app.set('views', './app/views');
+app.set('view engine', 'ejs');
+
 app.use(express.urlencoded({ extended: true }));
+app.use(session({
+    secret: SESSION_KEY,
+    resave: false,
+    saveUninitialized: false
+}));
 app.use(express.static('public'));
 
 
 //% Importazione Rotte
-const pageRoutes = require('./Routes/pageRoutes');
+const pageRoutes = require('./app/routes/pageRoutes');
 
-app.use(pageRoutes)
+app.use(pageRoutes);
 app.use((err, req, res, next) => {
     console.error(err);
     res.status(500).send('Something broke!');
 });
 
 
-//% Connessione a MongoDB
+//% Avvio Server
 (async function run() {
     try {
-        await mongoose.connect(`mongodb://localhost:${DB_PORT}/${DB_NAME}`);
-        console.log(`Connessione al database ${DB_NAME} riuscita`);
+        await mongooseConnect();
         app.listen(PORT, () => console.log(`Backend attivo sulla porta ${PORT}`));
     } catch (err) {
         console.error('Errore di connessione al database:', err);
