@@ -6,7 +6,7 @@ const path = require('path');
 const checkAuth = require('../Middlewares/user-auth');
 const csrf = require('csurf');
 const csrfProtection = csrf({ cookie: true });
-const options = { expiresIn: '100s', algorithm: 'RS256' };
+// const options = { expiresIn: '100s', algorithm: 'RS256' };
 
 module.exports = router
     .post('/login', (req, res) => {
