@@ -12,8 +12,8 @@ const DB_PORT = process.env.DB_PORT || 27017;
 const DB_NAME = process.env.DB_NAME || 'mongoose';
 
 app.use(express.json())
-
     //# Middleware di sessione
+    .set('trust proxy', 1) // trust first proxy
     .use(session({
         secret: process.env.SESSION_KEY || 'mySecretKey',
         resave: false,
@@ -34,7 +34,7 @@ app.use((err, req, res, next) => {
 });
 
 
-//% Connessione a MongoDB
+//% Avvio server
 (async function run() {
     try {
         await mongoose.connect(`mongodb://localhost:${DB_PORT}/${DB_NAME}`);
