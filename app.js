@@ -23,13 +23,18 @@ app.use(express.static('public'));
 
 
 //% Importazione Rotte
-const pageRoutes = require('./app/routes/pageRoutes');
+const pageRoutes = require('./app/routes/pages');
+const authRoutes = require('./app/routes/auth');
+const userRoutes = require('./app/routes/user');
 
 app.use(pageRoutes);
-app.use((err, req, res, next) => {
+app.use(authRoutes);
+app.use('/user', userRoutes);
+
+/* app.use((err, req, res, next) => {
     console.error(err);
     res.status(500).send('Something broke!');
-});
+}); */
 
 
 //% Avvio Server
