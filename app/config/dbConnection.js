@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 require('dotenv').config();
 const DB_PORT = process.env.DB_PORT || 27017;
-const DB_NAME = process.env.DB_NAME || 'passport';
+const DB_NAME = 'passport' || process.env.DB_NAME;
 
 
 async function mongooseConnect() {

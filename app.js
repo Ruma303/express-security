@@ -1,7 +1,7 @@
-const express = require('express'), app = express();
-// const passport = require('passport');
+const express = require('express'), app = express(), path = require('path');
 const session = require('express-session');
 const mongooseConnect = require('./app/config/dbConnection');
+const passport = require('passport');
 
 
 //% Configurazione Server
@@ -10,9 +10,10 @@ const SESSION_KEY = process.env.SESSION_KEY || 'mySecretKey';
 
 
 //% Middleware
-app.set('views', './app/views');
+app.set('views', path.resolve( 'app', 'views'));
 app.set('view engine', 'ejs');
-
+app.set('trust proxy', 1);
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
     secret: SESSION_KEY,
@@ -20,13 +21,31 @@ app.use(session({
     saveUninitialized: false
 }));
 
+//# Inizializzare Passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+//# Definizione Local Strategy
+
+
+//# Serializzazione e Deserializzazione
+passport.serializeUser((user, done) => {
+    done(null, user.id);
+});
+
+passport.deserializeUser((id, done) => {
+    // Trova l'utente nel database in base all'ID
+    // Se l'utente esiste, chiama done(null, user)
+    // Altrimenti, chiama done(null, false)
+});
+
+
 
 //% Importazione Rotte
 const pageRoutes = require('./app/routes/pages');
-const userRoutes = require('./app/routes/user');
 
 app.use(pageRoutes);
-app.use('/user', userRoutes);
 
 app.use((err, req, res, next) => {
     console.error(err);

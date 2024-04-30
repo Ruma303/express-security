@@ -23,7 +23,24 @@
 <body>
     <div id="app" class="container flex flex-col items-center gap-2 mx-auto max-w-[800px] pt-5">
         <%- include('partials/_header') %>
-        <h1 class="text-3xl text-black font-semibold my-4">Dashboard di <%= user.username %></h1>
+        <h1 class="text-3xl text-black font-semibold my-4">Dashboard</h1>
+
+        <div class="flex flex-col gap-4">
+            <div class="flex flex-col gap-2">
+                <h2 class="text-xl text-black font-semibold">Welcome, <%= user.username %></h2>
+                <p class="text-gray-500">You are logged in as <%= user.role %></p>
+            </div>
+
+            <div class="flex flex-col gap-2">
+                <h2 class="text-xl text-black font-semibold">User Information</h2>
+                <p class="text-gray-500">Username: <%= user.username %></p>
+                <p class="text-gray-500">Role: <%= user.role %></p>
+            </div>
+
+            <div class="flex flex-col gap-2">
+                <h2 class="text-xl text-black font-semibold">Actions</h2>
+                <a href="/logout" class="w-fit shadow bg-red-500 hover:bg-red-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" >Logout</a>
+            </div>
 
     </div>
 </body>
