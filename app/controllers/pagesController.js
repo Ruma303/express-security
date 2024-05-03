@@ -8,14 +8,6 @@ const home = async (req, res, next) => {
     }
 }
 
-const loginPage = async (req, res, next) => {
-    try {
-        res.render('login');
-    } catch (err) {
-        return next(err);
-    }
-}
-
 const register = async (req, res, next) => {
     try {
         res.render('register');
@@ -38,4 +30,4 @@ const createUser = async (req, res, next) => {
     }
 }
 
-module.exports = { home, loginPage, register, createUser };
+module.exports = { home, register, createUser };

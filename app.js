@@ -2,6 +2,7 @@ const express = require('express'), app = express(), path = require('path');
 const session = require('express-session');
 const mongooseConnect = require('./app/config/dbConnection');
 const passport = require('passport');
+const checkUserAuth = require('./app/middlewares/checkUserAuthenticated');
 
 
 //% Configurazione Server
@@ -27,15 +28,13 @@ app.use(passport.session());
 
 
 
-
 //% Importazione Rotte
 const pageRoutes = require('./app/routes/pages');
 app.use(pageRoutes);
 
 const userRoutes = require('./app/routes/user');
-const checkUserAuth = require('./app/middlewares/checkUserAuthenticated');
-// app.use(checkUserAuth(userRoutes));
-app.use(userRoutes);
+app.use(checkUserAuth(), userRoutes);
+// app.use(userRoutes);
 
 app.use((err, req, res, next) => {
     console.error(err);

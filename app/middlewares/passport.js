@@ -26,11 +26,14 @@ passport.serializeUser((user, done) => {
     console.log('serializzato', user.id)
 });
 
-passport.deserializeUser((id, done) => {
-    const user = User.findById(id)
-    if(!id) (err, user) => done(err, user)
-    console.log('deserializzato', id)
-    done(null, user)
+passport.deserializeUser(async (id, done) => {
+    try {
+        const user = await User.findById(id);
+        console.log('deserializzato', user._id)
+        done(null, user);
+    } catch (err) {
+        done(err, null);
+    }
 });
 
 
