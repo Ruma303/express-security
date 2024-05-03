@@ -10,7 +10,7 @@ const SESSION_KEY = process.env.SESSION_KEY || 'mySecretKey';
 
 
 //% Middleware
-app.set('views', path.resolve( 'app', 'views'));
+app.set('views', path.resolve('app', 'views'));
 app.set('view engine', 'ejs');
 app.set('trust proxy', 1);
 app.use(express.json());
@@ -26,26 +26,16 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-//# Definizione Local Strategy
-
-
-//# Serializzazione e Deserializzazione
-passport.serializeUser((user, done) => {
-    done(null, user.id);
-});
-
-passport.deserializeUser((id, done) => {
-    // Trova l'utente nel database in base all'ID
-    // Se l'utente esiste, chiama done(null, user)
-    // Altrimenti, chiama done(null, false)
-});
-
 
 
 //% Importazione Rotte
 const pageRoutes = require('./app/routes/pages');
-
 app.use(pageRoutes);
+
+const userRoutes = require('./app/routes/user');
+const checkUserAuth = require('./app/middlewares/checkUserAuthenticated');
+// app.use(checkUserAuth(userRoutes));
+app.use(userRoutes);
 
 app.use((err, req, res, next) => {
     console.error(err);
