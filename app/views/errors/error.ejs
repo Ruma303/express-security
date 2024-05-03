@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pagina inesistente</title>
+    <title>Error</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -22,9 +22,9 @@
 
 <body>
     <div id="app" class="container flex flex-col items-center gap-2 mx-auto max-w-[800px] pt-5">
-        <%- include('partials/_header') %>
-        <h1 class="text-3xl text-red-500 font-semibold my-4">Error 404</h1>
-        <p class="text-lg text-gray-700">La pagina che stai cercando non esiste.</p>
+        <%- include('../partials/_header') %>
+        <h1 class="text-3xl text-red-500 font-semibold my-4">Errore interno</h1>
+        <p class="text-md font-light text-center">Qualcosa è andato storto :(<br>Ci scusiamo per il disagio</p>
     </div>
 </body>
 </html>

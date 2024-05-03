@@ -41,15 +41,19 @@ app.use(pageRoutes);
 const userRoutes = require('./app/routes/user');
 app.use('/user', checkUserAuth(), userRoutes);
 
+const adminRoutes = require('./app/routes/admin');
+app.use('/admin', checkUserAuth(), adminRoutes);
+
+
 //# Middleware per la gestione degli errori
 app.use((err, req, res, next) => {
     console.error(err);
-    res.status(500).render('error');
+    res.status(500).render('errors/error');
     next(err);
 });
 
 //# Rotta di fallback
-app.all('*', (req, res) => res.status(404).render('404'));
+app.all('*', (req, res) => res.status(404).render('errors/404'));
 
 
 //% Avvio Server
