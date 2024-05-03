@@ -4,15 +4,16 @@ const User = require('../models/User');
 
 
 //# Definizione Local Strategy
-passport.use('local-login', new LocalStrategy(async (username, password, done) => {
+passport.use('local-login', new LocalStrategy({ passReqToCallback: true }, async (req, username, password, done) => {
     try {
         console.log('Username: ', username, '\nPassword: ', password) //? Debug
         const user = await User.findOne({ username: username });
         if (!user) {
-            return done(null, false, { message: 'Utente non trovato' });
+            return done(null, false, { userNotFound: req.flash('userNotFound', `*Utente ${username} non trovato`) });
         }
-        if (!user.verifyPassword(password)) {
-            return done(null, false, { message: 'Password non corretta' });
+        const isMatch = await user.verifyPassword(password);
+        if (!isMatch) {
+            return done(null, false, { incorrectPassword: req.flash('incorrectPassword', '*Password non corretta') });
         }
         return done(null, user);
     } catch (err) {
@@ -22,8 +23,8 @@ passport.use('local-login', new LocalStrategy(async (username, password, done) =
 
 //# Serializzazione e Deserializzazione
 passport.serializeUser((user, done) => {
-    done(null, user.id);
-    console.log('ID serializzato', user.id)
+    done(null, user._id);
+    console.log('ID serializzato', user._id)
 });
 
 passport.deserializeUser(async (id, done) => {

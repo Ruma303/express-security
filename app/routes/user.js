@@ -6,12 +6,15 @@ const passport = require('../middlewares/passport');
 router
     .get('/login', (req, res) => {
             if(req.isAuthenticated()) return res.redirect('/user/dashboard')
-            res.render('login');
+            res.render('login', {
+                userNotFound : req.flash('userNotFound'),
+                incorrectPassword : req.flash('incorrectPassword')
+            });
         })
     .post('/login', passport.authenticate('local-login', {
         successRedirect: '/user/dashboard',
         failureRedirect: '/user/login',
-        // failureFlash: true
+        failureFlash: true
     }))
     .get('/dashboard', userController.dashboard)
     .get('/logout', userController.logout)
