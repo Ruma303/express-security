@@ -6,14 +6,14 @@ const User = require('../models/User');
 //# Definizione Local Strategy
 passport.use('local-login', new LocalStrategy(async (username, password, done) => {
     try {
-        console.log(username, password) // { admin, password }
+        console.log('Username: ', username, '\nPassword: ', password) //? Debug
         const user = await User.findOne({ username: username });
         if (!user) {
             return done(null, false, { message: 'Utente non trovato' });
         }
-        /* if (!user.verifyPassword(password)) {
+        if (!user.verifyPassword(password)) {
             return done(null, false, { message: 'Password non corretta' });
-        } */
+        }
         return done(null, user);
     } catch (err) {
         return done(err);
@@ -23,18 +23,17 @@ passport.use('local-login', new LocalStrategy(async (username, password, done) =
 //# Serializzazione e Deserializzazione
 passport.serializeUser((user, done) => {
     done(null, user.id);
-    console.log('serializzato', user.id)
+    console.log('ID serializzato', user.id)
 });
 
 passport.deserializeUser(async (id, done) => {
     try {
         const user = await User.findById(id);
-        console.log('deserializzato', user._id)
+        console.log('ID deserializzato', user._id)
         done(null, user);
     } catch (err) {
         done(err, null);
     }
 });
-
 
 module.exports = passport;

@@ -5,7 +5,7 @@ const passport = require('../middlewares/passport');
 
 router
     .get('/login', (req, res) => {
-            if(req.isAuthenticated()) return res.redirect('/dashboard')
+            if(req.isAuthenticated()) return res.redirect('/user/dashboard')
             res.render('login');
         })
     .post('/login', passport.authenticate('local-login', {
