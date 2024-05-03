@@ -14,6 +14,6 @@ router
         // failureFlash: true
     }))
     .get('/dashboard', userController.dashboard)
-    .post('/logout', userController.logout)
+    .get('/logout', userController.logout)
 
 module.exports = router;
