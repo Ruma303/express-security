@@ -33,13 +33,17 @@ const pageRoutes = require('./app/routes/pages');
 app.use(pageRoutes);
 
 const userRoutes = require('./app/routes/user');
-app.use(checkUserAuth(), userRoutes);
-// app.use(userRoutes);
+app.use('/user', checkUserAuth(), userRoutes);
 
+//# Middleware per la gestione degli errori
 app.use((err, req, res, next) => {
     console.error(err);
-    res.status(500).send('Qualcosa è andato storto!');
+    res.status(500).render('error');
+    next(err);
 });
+
+//# Rotta di fallback
+app.all('*', (req, res) => res.status(404).render('404'));
 
 
 //% Avvio Server

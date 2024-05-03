@@ -9,8 +9,8 @@ router
             res.render('login');
         })
     .post('/login', passport.authenticate('local-login', {
-        successRedirect: '/dashboard',
-        failureRedirect: '/login',
+        successRedirect: '/user/dashboard',
+        failureRedirect: '/user/login',
         // failureFlash: true
     }))
     .get('/dashboard', userController.dashboard)
