@@ -7,26 +7,31 @@ const flash = require('connect-flash');
 
 
 //% Configurazione Server
+require('dotenv').config();
 const PORT = process.env.PORT || 3000;
 const SESSION_KEY = process.env.SESSION_KEY || 'mySecretKey';
 
+//% Configurazioni Express
+app.set('view engine', 'ejs');
+app.set('views', path.resolve('app', 'views'));
+app.set('trust proxy', 1);
+
+
 
 //% Middleware
-//# Configurazione EJS
-app.set('views', path.resolve('app', 'views'));
-app.set('view engine', 'ejs');
-
-//# Middleware di sessione
-app.set('trust proxy', 1);
+//# Middleware per la lettura dei dati
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+//# Middleware di sessione
 app.use(session({
     secret: SESSION_KEY,
     resave: false,
     saveUninitialized: false
 }));
 
-app.use(flash()); //# Middleware per i messaggi flash
+//# Middleware per i messaggi flash
+app.use(flash());
 
 //# Inizializzazione Passport.js
 app.use(passport.initialize());

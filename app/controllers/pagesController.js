@@ -23,7 +23,6 @@ const createUser = async (req, res, next) => {
         const user = new User({
             username: req.body.username,
             password: hashedPassword,
-            role: 'user'
         });
         const newUser = await user.save();
         res.status(201).render('dashboard', { user: newUser });
