@@ -1,34 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Passport.js</title>
+        <%- include('partials/_tailwind') %>
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Passport.js</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        clifford: '#da373d',
-                    }
-                }
-            }
-        }
-    </script>
-</head>
+    <body>
+        <div id="app" class="container flex flex-col items-center gap-2 mx-auto max-w-[800px] pt-5">
+            <%- include('partials/_header') %>
+            <h1 class="text-3xl text-black font-semibold my-4">Homepage</h1>
+            <article>
+                <p>Passport.js è un middleware di autenticazione per Node.js estremamente flessibile e modulare, ampiamente utilizzato in applicazioni basate su Express.js, ma compatibile anche con altri framework web di Node.js. È progettato per servire come strumento semplice e unificato per integrare diverse strategie di autenticazione, inclusi OAuth, OpenID Connect, e strategie locali basate su username e password.</p>
+            </article>
+        </div>
+        </div>
+    </body>
+    </html>
 
-<body>
-    <div id="app" class="container flex flex-col items-center gap-2 mx-auto max-w-[800px] pt-5">
-        <%- include('partials/_header') %>
-        <h1 class="text-3xl text-black font-semibold my-4">Homepage</h1>
-        <article>
-            <p>Passport.js è un middleware di autenticazione per Node.js estremamente flessibile e modulare, ampiamente utilizzato in applicazioni basate su Express.js, ma compatibile anche con altri framework web di Node.js. È progettato per servire come strumento semplice e unificato per integrare diverse strategie di autenticazione, inclusi OAuth, OpenID Connect, e strategie locali basate su username e password.</p>
-        </article>
-    </div>
-    </div>
-</body>
 
-</html>
