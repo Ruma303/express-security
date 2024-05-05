@@ -3,7 +3,7 @@ const session = require('express-session');
 const mongooseConnect = require('./app/config/dbConnection');
 const passport = require('passport');
 const checkUserAuth = require('./app/middlewares/checkUserAuthenticated');
-    const flash = require('connect-flash');
+const flash = require('connect-flash');
 
 
 //% Configurazione Server
@@ -46,8 +46,9 @@ app.use(pageRoutes);
 const userRoutes = require('./app/routes/user');
 app.use('/user', checkUserAuth(), userRoutes);
 
+const checkRole = require('./app/middlewares/checkRole');
 const adminRoutes = require('./app/routes/admin');
-app.use('/admin', checkUserAuth(), adminRoutes);
+app.use('/admin', checkUserAuth(), checkRole('admin'), adminRoutes);
 
 
 //# Middleware per la gestione degli errori
@@ -58,7 +59,9 @@ app.use((err, req, res, next) => {
 });
 
 //# Rotta di fallback
-app.all('*', (req, res) => res.status(404).render('errors/404'));
+app.all('*', (req, res) => {
+    res.status(404).render('errors/404');
+});
 
 
 //% Avvio Server
