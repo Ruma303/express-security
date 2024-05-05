@@ -30,12 +30,12 @@ app.use(session({
     saveUninitialized: false
 }));
 
-    //# Middleware per i messaggi flash
-    app.use(flash());
+//# Middleware per i messaggi flash
+app.use(flash());
 
-    //# Inizializzazione Passport.js
-    app.use(passport.initialize());
-    app.use(passport.session());
+//# Inizializzazione Passport.js
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 
