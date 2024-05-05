@@ -3,7 +3,7 @@ const session = require('express-session');
 const mongooseConnect = require('./app/config/dbConnection');
 const passport = require('passport');
 const checkUserAuth = require('./app/middlewares/checkUserAuthenticated');
-const flash = require('connect-flash');
+    const flash = require('connect-flash');
 
 
 //% Configurazione Server
@@ -30,12 +30,12 @@ app.use(session({
     saveUninitialized: false
 }));
 
-//# Middleware per i messaggi flash
-app.use(flash());
+    //# Middleware per i messaggi flash
+    app.use(flash());
 
-//# Inizializzazione Passport.js
-app.use(passport.initialize());
-app.use(passport.session());
+    //# Inizializzazione Passport.js
+    app.use(passport.initialize());
+    app.use(passport.session());
 
 
 

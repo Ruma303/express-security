@@ -5,12 +5,12 @@ const passport = require('../config/passport');
 
 router
     .get('/login', (req, res) => {
-            if(req.isAuthenticated()) return res.redirect('/user/dashboard')
-            res.render('login', {
-                userNotFound : req.flash('userNotFound'),
-                incorrectPassword : req.flash('incorrectPassword')
-            });
-        })
+        if(req.isAuthenticated()) return res.redirect('/user/dashboard');
+        res.render('login', {
+            userNotFound : req.flash('userNotFound'),
+            incorrectPassword : req.flash('incorrectPassword')
+        });
+    })
     .post('/login', passport.authenticate('local-login', {
         successRedirect: '/user/dashboard',
         failureRedirect: '/user/login',
