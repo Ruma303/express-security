@@ -6,7 +6,7 @@ const path = require('path');
 const checkAuth = require('../Middlewares/user-auth');
 const csrf = require('csurf');
 const csrfProtection = csrf({ cookie: true });
-// const options = { expiresIn: '100s', algorithm: 'RS256' };
+const options = { expiresIn: '100s', algorithm: 'RS256' };
 
 module.exports = router
     .post('/login', (req, res) => {
@@ -27,10 +27,11 @@ module.exports = router
             secure: false
         };
         const token = jwt.sign(payload, process.env.JWT_SECRET, options);
-        res.cookie('JWT', token, cookieSettings).send();
-    })
-    //console.log(req.cookies.JWT);
-    .get('/check', (req, res) => {
+        res.cookie('JWT', token, cookieSettings).send('Login effettuato');
+    }) */
+
+    /* .get('/check', (req, res) => {
+        console.log(req.cookies.JWT);
         const token = req.cookies.JWT;
         if (!token) return res.status(401).send('Token mancante');
         try {
@@ -55,7 +56,7 @@ module.exports = router
         };
         const prvKey = fs.readFileSync(path.resolve('rsa.private'));
         const token = jwt.sign(payload, prvKey, options);
-        res.cookie('JWT', token, cookieSettings).send();
+        res.cookie('JWT', token, cookieSettings).send('Login effettuato');
     })
     /* .get('/check', (req, res) => {
         const token = req.cookies.JWT;
@@ -71,6 +72,7 @@ module.exports = router
         }
     }) */
 
+    
     //% Middleware
     .get('/check', checkAuth, (req, res) => {
         res.send('Il token è valido');
@@ -96,4 +98,3 @@ module.exports = router
         console.log(req.body);
         res.send('Email cambiata');
     })
-

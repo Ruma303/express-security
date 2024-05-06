@@ -26,7 +26,7 @@ app.use((err, req, res, next) => {
 });
 
 
-//% Connessione a MongoDB
+//% Avvio server
 (async function run() {
     try {
         await mongoose.connect(`mongodb://localhost:${DB_PORT}/${DB_NAME}`);
