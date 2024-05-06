@@ -50,6 +50,8 @@ const checkRole = require('./app/middlewares/checkRole');
 const adminRoutes = require('./app/routes/admin');
 app.use('/admin', checkUserAuth(), checkRole('admin'), adminRoutes);
 
+const googleRoutes = require('./app/routes/google');
+app.use(googleRoutes);
 
 //# Middleware per la gestione degli errori
 app.use((err, req, res, next) => {

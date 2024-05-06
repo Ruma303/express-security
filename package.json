@@ -12,6 +12,7 @@
         "jsonwebtoken": "^9.0.2",
         "mongoose": "^8.0.4",
         "passport": "^0.7.0",
+        "passport-google-oauth20": "^2.0.0",
         "passport-local": "^1.0.0",
         "uuid": "^9.0.1"
     },
