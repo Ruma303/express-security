@@ -15,6 +15,7 @@ passport.use(new GoogleStrategy(
         clientSecret: GOOGLE_CLIENT_SECRET,
         callbackURL: '/google-auth-redirect',
         responseType: 'code',
+        prompt: 'select_account',
     },
     async (accessToken, refreshToken, tokenID, done) => {
         console.log(tokenID) //? Debug
