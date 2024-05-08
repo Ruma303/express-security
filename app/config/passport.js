@@ -3,7 +3,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const User = require('../models/User');
 
 //# Definizione Local Strategy
-/* passport.use('local-strategy', new LocalStrategy(async (username, password, done) => {
+passport.use('local-login', new LocalStrategy(async (username, password, done) => {
     try {
         console.log('Username: ', username, '\nPassword: ', password) //? Debug
         const user = await User.findOne({ username: username });
@@ -18,9 +18,9 @@ const User = require('../models/User');
     } catch (err) {
         return done(err);
     }
-})); */
+}));
 
-passport.use('local-login', new LocalStrategy({ passReqToCallback: true },
+/* passport.use('local-login', new LocalStrategy({ passReqToCallback: true },
         async (req, username, password, done) => {
     try {
         console.log('Username: ', username, '\nPassword: ', password) //? Debug
@@ -36,7 +36,7 @@ passport.use('local-login', new LocalStrategy({ passReqToCallback: true },
     } catch (err) {
         return done(err);
     }
-}));
+})); */
 
 
 

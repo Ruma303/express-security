@@ -16,6 +16,6 @@
         "uuid": "^9.0.1"
     },
     "scripts": {
-        "start": "nodemon app.js -e js,ejs"
+        "start": "nodemon app.js -e js,ejs,.env"
     }
 }

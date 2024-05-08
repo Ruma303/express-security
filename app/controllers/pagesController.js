@@ -20,12 +20,11 @@ const register = async (req, res, next) => {
 const createUser = async (req, res, next) => {
     try {
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
-        const user = new User({
+        const user = await User.create({
             username: req.body.username,
             password: hashedPassword,
         });
-        const newUser = await user.save();
-        res.status(201).render('dashboard', { user: newUser });
+        res.status(201).render('dashboard', { user });
     } catch (err) {
         return next(err);
     }
